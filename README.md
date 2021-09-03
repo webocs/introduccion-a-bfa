@@ -28,7 +28,7 @@
         -  Sello de tiempo
         -  Sello de tiempo 2.0
     -  El ETH para interactuar es gratuito, 
-        - En la red de pruena: se consigue solicitando en el grupo de telegram (https://t.me/bfatec)
+        - En la red de prueba: se consigue solicitando en el grupo de telegram (https://t.me/bfatec)
         - En la red main, se recarga automáticamente mediante una destilería
 
 ### 1.2 Repositorios importantes
@@ -37,7 +37,7 @@
 	    - https://gitlab.bfa.ar/blockchain/nucleo
 - Bfar/nodo: Automatiza el alta de un nodo utilizando docker para no tener que hacer todo from scratch. Ideal para desarrollo
 	    - https://gitlab.bfa.ar/docker/bfanodo
-	    -
+	    
 ### 1.3 Tipos de nodos
 - Nodo sellador: Requiere acuerdo conel team de bfa, no es nceesario para desarrolla o para utilizar la bfa puede ser algo deseable para la organización, para contribuir con bfa. Estos nodos se asignan en partes iguales a organismos publicos y privados.
 - Nodo transaccional: Es una gateway hacia la BFA, permite crear cuentas, deployear contractos, interactuar con contratos etc. 
