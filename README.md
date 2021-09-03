@@ -138,4 +138,47 @@ Account 1: 0x83e362503e1c13dfcd0b1a64307f0fc5d8e6c598          0 transactions, 1
 ```
  Podemos ver que la cuenta tiene `100000000000000000 wei` es decir, 1 ETH (Wei es la unidad en al que se subdivide el ETH).
  
- Nota Importante: Para
+ > **Nota Importante**: Para poder interactuar con la blockchain utilizando esa cuenta creada es necesario desbloquearla, para esto se debe usar el comando `unlock.js` pero este comando fallará debido a que no se está conectando al nodo de  manera segura (https) sino que se está realizando mediante http. Para poder sortear esta dificultad (únicamente en  desarrollo) es necesario modificar el script de arranque del nodo `singleStart.sh` en la carpeta bin. Para esto modificamos la funcion startGeth(), agregando `--allow-insecure-unlock`, como se muestra a continuación:
+ 
+ ### singleStart.sh
+ ```
+ //... 
+ function startgeth()
+{
+    echo "***" Starting geth $*
+    # "NoPruning=true" means "--gcmode archive"
+        geth --config ${BFATOML} --allow-insecure-unlock $* &
+    gethpid=$!
+    PIDIDX[${gethpid}]="geth"
+}
+//...
+ ```
+
+ > Reiniciamos el container y ya podremos utilizar `unlock.js`. También pueden encontrar el archivo ya modificado en este repo, en la carpeta bfa-nodo. Solo deberían renombrar a singleStart.sh y reemplazar
+ 
+ 
+ ## 2. Workflow de trabajo en desarrollo
+ 
+### 2.1 Truffle suite
+
+Si bien podemos desarrollar utilizando la red de prueba de la BFA,  durante el proceso de desarrollo es mejor utilizar herramientas más rápidas que nos permitan iterar continuamente para poder detectar errores antes de hacer un deploy. 
+
+Para eso existe [truffle suite](https://www.trufflesuite.com/), que esta compuesto de 3 programas diferentes 
+- **Truffle**: Un ambiente de de desarrollo y testing 
+- **Ganache**: Una blockchain personal que se levanta en localhost  utilizada para hacer pruebas rapidas
+- **Drizzle**: Una colección de librerías de frontend (No nos interesa por el momento)
+
+### Instalar truffle y ganache
+Par esto utilizaremos [nodejs](https://nodejs.org/es/), particularmente su manager de paquetes npm. Para instalar truffle de manera global utilizaremos
+
+``` npm i -g truffle ```
+
+Una vez instalado ya podremos utilizar todos los coomandos del cli de truffle.  Para crear un proyecto nuevo podemos utilizar ``truffle init``. Esto nos creará el scaffolding de un proyecto de truffle, que cuenta con 3 carpetas principales:
+
+- **Contracts**: Almacenará todos los contratos de solidity que formen parte de nuestro proyecto
+- **Migrations**: Utilizado para migrar y deployear los contratos a la red
+- **Test**: Almacena los tests escritos en `js` o en `sol`. Truffle soporta ambos lenguajes
+
+Además encontraremos un archivo impoortante `truffle-config.js`, este archivo nos permitirá definir las redes con las que vamos a interactuar, especificando los datos del `RPC` que permite interactuar con la red de destino. En el caso de BFA, utilizaremos el nodo que creamos anteriormente, para hacer pruebas rápidas utilizaremos ganache.
+
+###
