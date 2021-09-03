@@ -168,12 +168,12 @@ Para eso existe [truffle suite](https://www.trufflesuite.com/), que esta compues
 - **Ganache**: Una blockchain personal que se levanta en localhost  utilizada para hacer pruebas rapidas
 - **Drizzle**: Una colección de librerías de frontend (No nos interesa por el momento)
 
-### Instalar truffle y ganache
+### Truffle 
 Par esto utilizaremos [nodejs](https://nodejs.org/es/), particularmente su manager de paquetes npm. Para instalar truffle de manera global utilizaremos
 
 ``` npm i -g truffle ```
 
-Una vez instalado ya podremos utilizar todos los coomandos del cli de truffle.  Para crear un proyecto nuevo podemos utilizar ``truffle init``. Esto nos creará el scaffolding de un proyecto de truffle, que cuenta con 3 carpetas principales:
+Una vez instalado ya podremos utilizar todos los comandos del cli de truffle.  Para crear un proyecto nuevo podemos utilizar ``truffle init``. Esto nos creará el scaffolding de un proyecto de truffle, que cuenta con 3 carpetas principales:
 
 - **Contracts**: Almacenará todos los contratos de solidity que formen parte de nuestro proyecto
 - **Migrations**: Utilizado para migrar y deployear los contratos a la red
@@ -181,4 +181,52 @@ Una vez instalado ya podremos utilizar todos los coomandos del cli de truffle.  
 
 Además encontraremos un archivo impoortante `truffle-config.js`, este archivo nos permitirá definir las redes con las que vamos a interactuar, especificando los datos del `RPC` que permite interactuar con la red de destino. En el caso de BFA, utilizaremos el nodo que creamos anteriormente, para hacer pruebas rápidas utilizaremos ganache.
 
-###
+El archivo `truffle-config.js` tiene la siguiente forma:
+
+### truffle-config.js
+```
+module.exports = {
+  networks: {
+    development: {
+      host: "127.0.0.1",
+      port: 8877,
+      network_id: "123456" // Network ID de ganache
+    },
+    bfaDev: {
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "55555000000" // Network ID BFA test
+    }
+  },
+  compilers: {
+    solc: {
+      version: "^0.7.0"
+    }
+  }
+};
+```
+
+En este archivo se pueden declarar múltiples redes, donde se establecen los datos del  RPC para poder acceder a la  red junto con el network_id de la misma. En el caso de bfa, se debe utilizar el id `55555000000`. Para ganache, podemos configurar el id que deseamos y escuchar en el puerto que deseamos.
+
+### Ganache
+
+Ganache nos permite montar una blockchain personal descartable de manera local para interactuar con ella y poder hacer todo tipo de pruebas, evaluando los resultados rapidamente.  Existen dos formas de instalar y ejecutar ganache
+
+- **CLI**: Ideal para trabajo en instancias remotas o para armar pipelines de CI/CD. Para instalar el CLI utilizamos `npm i -g ganache-cli`
+- **UI**: Para trabajo en una computadora personal, tiene algunas herramientas útiles que el CLI no tiene, pero no es obligatorio instalarlo. Para instalaro simplemente descargamos la versión correspondiente a nuestro S.O desde la [web de gancahe](https://www.trufflesuite.com/ganache)
+
+#### Configurando ganche en su versión de escritorio
+
+Lo primero que debemos hacer al ingresar a ganache es crear un workspace darle un nombre y configurar los datos del server. En la pestaña `Server` podemos configurar todos los datos de `network_id` ,`port`, `direccion` etc. Una vez ejecutado ganache ya tendremos una blockchain de eth con la cual podemos interactuar mediante `RPC`.
+
+
+### Combinando Ganache y Truffle
+
+Como se mostró anteriormente, truffle puede ser configurado para apuntar a la instancia de ganache que acabamos de crear. 
+Una vez congfigurada la red en el archivo `truffle-config.js` que se creó al ejecutar `truffle init` podemos ir a nuestra carpepta de contratos `Contracts` y empezar a desarrollar los contratos en Solidity. Para este ejemplo utilizaremos un contrato `HelloWorld.sol` que permite almacenar un valor en string y  luego leerlo. Pueden encontrar todo el codigo de este proyecto en la carpeta truffle de este repo.
+
+Una vez dentro del proyecto, nos interesan dos comandos de truffle `truffle compile` y `truffle migrate` , estos nos permitiran generar los abi y binarios de nuestros contratos y luego migrarlos y deployearlos a la blockchain que hayamos configurado. Es necesario tener una cuenta desbloqueada y con fondos para poder hacer esto. Si estamos en el contexto de ganache, no vamos a tener este problema.
+
+# Testing de los contratos
+
+Truffle permite generar tests  en lenguaje `JS` utilizando sintaxis mocha con `assert` o bin utilizando solidty. En este repo van a encontrar los ejemplos de tests escritos en JS. Para ejecutarlos haremos `truffle test`. Esto ejecutará todos los tests que encuentre dentro de la carpeta de tests, en la red "development" por defecto. Podemos cambiar esto por configuracion. 
