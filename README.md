@@ -2,8 +2,6 @@
 ## _Desde 0 a deployear un contrato_
 
 ## Índice
-Dillinger is a cloud-enabled, mobile-ready, offline-storage compatible,
-AngularJS-powered HTML5 Markdown editor.
 
 1. Intro a BFA
     1.1. Características de la BFA
