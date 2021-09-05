@@ -1,9 +1,9 @@
-# Introducción al desarrollo sobre BFA
+# Introducción al desarrollo sobre Blockchain Federal Argentina
 ## _Desde 0 a deployear un contrato_
 
 ## Índice
-1. Intro a BFA. 
-    1. Características de la BFA
+1. Intro a Blockchain Federal Argentina. 
+    1. Características de la Blockchain Federal Argentina
     2. Repositorios importantes
     3. Tipos de Nodos
     4. Montar un nodo para desarrollo con docker
@@ -14,9 +14,9 @@
     2. Deployear a la red de prueba
     3. Interactuar con un contrato desde JS
 
-## 1. Intro a BFA
+## 1. Intro a Blockchain Federal Argentina
 
-### 1.1. Características de la BFA
+### 1.1. Características de la Blockchain Federal Argentina
 - Basada en Ethereum
     - Sin valor monetario de criptomoneda
     - El eth se utiliza únicamente para realizar transacciones/deployear smart contracts
